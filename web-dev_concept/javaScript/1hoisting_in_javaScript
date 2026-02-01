@@ -1,1 +1,18 @@
+# To understand the hoisting feature , first getting the execution context
+
+1. Execution context :  environment where java script code evaluate and execute.
+   It has two types : 1. Global execution context    2. Funtion execution context
+   Every execution context(Global/function) has two phases : 1. memory phase  2. execution phase
+
+   1. Global execution context : it scans entire js file initially 
+             a> memory phase : 1. containers(let/const) get TDL 
+                               2. container(var) get undefined.
+                               3. functions definitions are stored entirely.
+             b> execution phase : now line-by-line get execute and containers get value and if there are 
+                                  functional calls are move into call stack 
+   2. Function execution context : as function call , call stack will get fuction execution context(like global)
+
+2. Hoisting : calling the function without declaring 
+   Hoisting is possible because of Execution context , where function or containers(var/const/let) get memory
+
 
