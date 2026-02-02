@@ -14,5 +14,60 @@
 
 2. Hoisting : calling the function without declaring 
    Hoisting is possible because of Execution context , where function or containers(var/const/let) get memory
+   Hoisting with var,let,const,functions,function let/var/const
+   1 var :   code ->  console.log(a)    ->  undefined 
+                      var a = 10
+            var at memory phase in GEC initialized by undefined
+  
+   2 let/const :   code ->  console.log(a)  -> refrence error
+                                let/const a = 10
+            let/const is not initialized at time of memory phase in GEC
+   3 function  :   code ->  func()  ->  Hello
+                            func(){ console.log("Hello") }
+            functions are fully stored during memory phase so can be called before decalaration in EP
+   4 function in let/var/const  :  contain  -> refrence error with let/const and undefined with var
+                                   let/var/const contain = func(){}
+
+3. Why let/const is not initialized at memory phase time ?
+   IN legace JS the var is used so as it is.
+   in new ES66, let/const for black scope are introduced and not initialized before actual user initialization to make clean code
+   bad code :  console.log(a)          clean code :  datatype a = 10
+               datatype a = 10                      console.log(a)
+
+4. let/const are initialized with Temporal Dead Zone 
+   Temporal Dead Zone is the phase where let and const variables are hoisted but not initialized,
+   so accessing them before declaration causes an error. --> reference error
+
+5. relation between execution context , lexical env. , variable environmnet
+   when gloabal execution is created for js file initially, in memory phase , two env's are ..
+   1. variable environment : stores var , function 
+                             based on functional scope
+                             hoisted andinitialized as : var = undefined , function definition
+   2. lexical environment(ES6)  : stores let , const , block scopes
+                                  based on block scope
+                                  hoisted but initializes by TDZ or refrence error
+                                  also stores refrences to outer scopes
+     Reference of outer scope :   each LE keeps a pointer to its parent lexical environment
+                                  so that inner scope can access the variables of outer scope
+                                  this pointer is called : outer lexical env. refrence 
+  3. closure : A closure is created when a function remembers and accesses variables from its
+               outer (lexical) scope even after the outer function has finished execution.
+              
+               function makeCounter() {
+               let count = 0;
+
+                 return function () {
+                 count++;
+                 console.log(count);
+                  };
+             }
+
+              const counter = makeCounter();
+              counter(); // 1
+              counter(); // 2
+
+        Normally, makeCounter execution context should be destroyed ❌
+        BUT JS sees inner function still needs count
+       👉 So JS keeps the outer Lexical Environment alive
 
 
